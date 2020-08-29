@@ -1,3 +1,6 @@
+#Juan Pablo Montoya Números mayores y menores
+
+
 def menor(a,b):
     return (a, False) if a<=b else (b, True)
 def mayor(a,b):
