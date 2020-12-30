@@ -533,7 +533,7 @@ void vender(vector<Inventario> inventario, vector<Vendedores> vendedores, vector
             cin>>ano;
             string nFactura ="F"+ano+mes+dia;
             ofstream oft("static/facturas.csv", std::ofstream::out | std::ofstream::app);
-            oft<<"\n"<<nFactura<<", "<<Cliente<<", "<< vendedorM<<", "<<ClaveDelArticulo<<", "<<cantidad<<", "<<precio<<endl;
+            oft<<nFactura<<", "<<Cliente<<", "<< vendedorM<<", "<<ClaveDelArticulo<<", "<<cantidad<<", "<<precio<<endl;
             oft.close();
             cout<<nFactura<<", "<<Cliente<<", "<< vendedorM<<", "<<ClaveDelArticulo<<", "<<cantidad<<", "<<precio<<endl;
         }
@@ -572,7 +572,7 @@ int main(){
     vector <Facturas> fact_ = readAndTokenizeFacturas("static/facturas.csv", 6, 1);
     
     letra = ConsultasReportes();
-
+    
     if (letra == "F") {
         cout << "Ingresa Numero de Factura";
         cin >> nfactura;
@@ -612,7 +612,7 @@ int main(){
         cout<<max_minA[1];
         cout<<MejorA.get_Album()<<endl;
     }
-    if (letra == "L") {// fx inventario
+    if (letra == "I") {// fx inventario
         mostrarArticulos(inv);
     } 
     if (letra == "H") {// fx inventario

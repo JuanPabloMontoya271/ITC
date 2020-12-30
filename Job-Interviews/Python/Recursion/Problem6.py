@@ -3,11 +3,12 @@ cache = {}
 def fibonacci(n):
     
     if n in cache:
-        return n
-    if n <2:
-        return 1
+        return cache[n]
     else:
-        result = fibonacci(n-1)+ fibonacci(n-2)
-    cache[n]= result
-    return result
-print(fibonacci(5))
+        if n <2:
+            return 1
+        else:
+            result = fibonacci(n-1)+ fibonacci(n-2)
+        cache[n]= result
+        return result
+print(fibonacci(6))
