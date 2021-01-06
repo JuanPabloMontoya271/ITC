@@ -1,0 +1,16 @@
+.wrapper{
+    
+   
+    
+    height: 100%;
+    display: grid;
+    grid-template-rows: minmax(40vh, 40vh); 
+    align-items: baseline;
+    justify-items: stretch;
+    
+ 
+}
+.bar{
+    background: royalblue;
+    grid-row: 1;
+}
