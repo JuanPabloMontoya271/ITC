@@ -7,14 +7,17 @@ class Visualizers extends Component {
 
         super(props)
         this.state = {
-            numValues: 75,
+            numValues: 100,
             values: [ ],
             width: 99,
             maxHeight: 40,
             maxValue: 10,
             minValue: 0,
             speed: 500,
-            valueToLook: 10
+            valueToLook: 10, 
+            timeToLook: 20000,
+            maxTime:500, 
+            waitTime: 10,
             
         }
     }
@@ -22,7 +25,10 @@ class Visualizers extends Component {
     componentDidMount(){
         
         let array =this.resetArray();
-        this.run("BinarySearch", array )
+        //this.run("BinarySearch", array )
+        
+        this.mergeSortAlgorithm(array)
+
         
     }
     componentWillUnmount() {
@@ -39,7 +45,7 @@ class Visualizers extends Component {
                 break;
             case "BinarySearch":
                 res=this.BinarySearch(array,valueToLook);
-                console.log(res);
+                //res);
                 break;
             case "LinearSearch":
                 res = this.linearSearchSorted(array, valueToLook);
@@ -52,8 +58,83 @@ class Visualizers extends Component {
         
       }
      
-      mergeSortAlgorithm(){
+       async mergeSortAlgorithm(array){
+            let values = array.values
+            await sleep(2000)
+            values = await this.mergeSort(values, values, 0 , values.length-1)
 
+            //values);
+            
+            this.setState({values:values})
+            await sleep (2000)
+            //"values before run", values);
+            await this.run("BinarySearch", {values: values})
+            await this.run("LinearSearch", {values: values})
+      }
+      async mergeSort(array, values, i , j){
+          if (array.length <=1){
+              return array
+
+            }
+        let mid = Math.floor((i+j)/2)
+        //"mid", mid, "i", i, "j");
+        
+        let left = await this.mergeSort(array.slice(0, Math.floor(array.length/2)), values, i, mid)
+        let right = await this.mergeSort(array.slice(array.length/2, array.length), values, mid, j)
+        
+        return await this.merge(left, right,values, i, j)
+
+      }
+  
+       async merge(l1, l2, array, y, k){
+          let i = 0;
+          let j = 0;
+          let res = []
+          let prev;
+          //"Merge i", y, "Merge j", k);
+          while (i <l1.length && j<l2.length){
+            
+            if (l1[i].val<=l2[j].val){
+                res.push (l1[i])
+                array[y+i+j] = l1[i]
+                prev = y+i+j
+                array[y+i+j].color = "red"
+                i++;
+                
+            }
+
+            else{
+
+                res.push (l2[j])
+                array[y+i+j] = l2[j]
+                array[y+i+j].color = "red"
+                prev = y+i+j    
+                j++;
+
+            }
+            
+            await sleep(this.state.timeToLook/(array.length*Math.log2(array.length)))
+            this.setState({values: array})
+           array[prev].color = "royalblue"
+            
+          }
+          while (i<l1.length){
+              res.push(l1[i])
+              array[y+i+j] = l1[i]
+              i++;
+            
+             
+          }
+          while (j<l2.length){
+
+            res.push (l2[j])
+            array[y+i+j] = l2[j]
+            j++;
+            
+          }
+          this.setState({values: array})
+          await sleep ((res.length*this.state.waitTime)%this.state.maxTime)
+          return res
 
       }
       async linearSearchSorted(array, value){
@@ -74,11 +155,11 @@ class Visualizers extends Component {
             array[i].color = "red"
             this.setState({values:array})
             
-            await sleep(this.state.speed)
+            await sleep(this.state.timeToLook/(array.length*2))
         }
       }
       async BinarySearch(array, value){
-        console.log(array, "value",value);
+        //array, "value",value);
         
         
         let i = 0;
@@ -109,7 +190,7 @@ class Visualizers extends Component {
             let mid =  array[(midIdx)].val
            
             if ((mid) === value){
-                console.log("mid", mid, value);
+                //"mid", mid, value);
                 array[midIdx].color = "green"
                 return mid
 
@@ -119,14 +200,14 @@ class Visualizers extends Component {
                 
                 i = midIdx+1;
                 array[i].color = "red"
-                console.log("i", mid);
+                //"i", mid);
                 
             }
             else{
                 array[j].color = "royalblue"
                 j= midIdx-1;
                 array[j].color = "red"
-                console.log("j",mid);
+                //"j",mid);
             }
             this.setState({values: array})
             return {i: i, j: j, mid: mid, array:array}
@@ -144,10 +225,11 @@ class Visualizers extends Component {
             
 
         }
-        this.setState({values: array.sort((a,b)=>{
-            let x = a.val;
-            let y = b.val;
-            return ((x < y) ? -1 : ((x > y) ? 1 : 0));}), maxValue : max_val})
+        this.setState({values:array})
+        // this.setState({values: array.sort((a,b)=>{
+        //     let x = a.val;
+        //     let y = b.val;
+        //     return ((x < y) ? -1 : ((x > y) ? 1 : 0));}), maxValue : max_val})
         return {values: array, maxValue : max_val}
     }
     render() {
