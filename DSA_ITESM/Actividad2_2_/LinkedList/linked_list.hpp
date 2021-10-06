@@ -15,39 +15,60 @@ class LinkedList
 {
 public:
     node<T>* first;
-    node<T>* last;
     LinkedList<T>() {
         first = NULL;
-        last = NULL;
+
     }
 
-    void add(T data) {
-        if (!first) {
-            // The list is empty
-            first = new node<T>;
-            first->data = data;
-            first->next = NULL;
-            last = first;
+    void push(T data) {
+
+        // The list is empty
+        if (!first)
+        {
+            node<T>* inserted = new node<T>;
+            inserted->data = data;
+            inserted->next = NULL;
+            this->first = inserted;
         }
-        else {
-            // The list isn't empty
-            if (last == first) {
-                // The list has one element
-                last = new node<T>;
-                last->data = data;
-                last->next = NULL;
-                first->next = last;
+        else
+        {
+            node<T>* inserted = new node<T>;
+            inserted->data = data;
+            inserted->next = this->first;
+            this->first = inserted;
+
+        }
+        std::cout << "Push : " << data << std::endl;
+        display();
+
+    }
+    void insert_mid(T data)
+    {
+        node<T>* node_to_insert = new node<T>;
+        node_to_insert->data = data;
+        if (!first)
+        {
+            node_to_insert->next = NULL;
+            this->first = node_to_insert;
+        }
+        else
+        {
+            auto slow = first;
+            auto fast = first->next;
+            while (fast && fast->next)
+            {
+                fast = fast->next->next;
+                slow = slow->next;
 
             }
-            else {
-                // The list has more than one element
-                node<T>* insdata = new node<T>;
-                insdata->data = data;
-                insdata->next = NULL;
-                last->next = insdata;
-                last = insdata;
-            }
+            auto next = slow->next;
+            node_to_insert->next = next;
+            slow->next = node_to_insert;
+
+
         }
+        std::cout << "Insert Mid : " << data << std::endl;
+        display();
     }
     void add(int index, T value)
     {
@@ -57,6 +78,8 @@ public:
         inserted->data = value;
         inserted->next = next;
         curr->next = inserted;
+        std::cout << "Add : " << value << " at index : " << value << std::endl;
+        display();
     }
     node<T>* get_node(int index)
     {
@@ -91,6 +114,8 @@ public:
     {
         auto curr = get_node(index);
         curr->data = value;
+        std::cout << "Update index : " << index << " To value : " << value << std::endl;
+        display();
     }
     void del(int index)
     {
@@ -99,6 +124,7 @@ public:
             auto curr = this->first;
             this->first = this->first->next;
             delete curr;
+
         }
         else
         {
@@ -106,8 +132,10 @@ public:
             auto curr = prev->next;
             prev->next = curr->next;
             delete curr;
-        }
 
+        }
+        std::cout << "Delete index : " << index << std::endl;
+        display();
 
     }
     void display()
