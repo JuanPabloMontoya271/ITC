@@ -1,4 +1,5 @@
 #include "interface.hpp"
+#include "../date_parser/string_manipulation.hpp"
 Interface::Interface(std::vector<Element> elements, std::vector<std::pair<int, int>>frequencies, std::unordered_map<int, Element> frequency_table)
 {
     elements_ = elements;
@@ -9,7 +10,7 @@ void Interface::Run()
 {
     SortElements();
     SortByFrequencies();
-    auto filtered_vector = filter_vector(sorted_elements_);
+    auto filtered_vector = filter_vector_by_ips(sorted_elements_);
     show_content(filtered_vector);
     show_content();
 
@@ -17,7 +18,7 @@ void Interface::Run()
 
 void Interface::SortElements()
 {
-    std::cout << "Ordenamiento de los Datos Basado en la fecha : " << std::endl;
+    std::cout << "Ordenamiento de los Datos Basado en la IP : " << std::endl;
     Continue();
     auto sorter = Sort(elements_);
     auto sorted = sorter.mergeSort();
@@ -35,7 +36,7 @@ void Interface::show_content()
         auto element = frequency_table_[elem.first];
         auto date = element.date();
         auto time = date.time;
-        std::cout << "Key : " << element.key() << "Month : " << date.month << ", Day : " << date.day << ", Time : " << time.hour << "h" << time.minutes << "m" << time.seconds << "s" << std::endl;
+        std::cout <<"Numeric IP : " << element.numeric_ip() << ", Key : " << element.key() << "Month : " << date.month << ", Day : " << date.day << ", Time : " << time.hour << "h" << time.minutes << "m" << time.seconds << "s" << std::endl;
         std::cout << "Content : " << element.content() << ", Message : " << element.message() << std::endl;
     }
     Continue();
@@ -65,6 +66,19 @@ void Interface::Continue()
         std::cout << "Gracias por utilizar nuestro programa" << std::endl;
         std::exit(1);
     }
+}
+void Interface::generate_ip_bounds()
+{
+    std::string min_ip_input;
+    std::string max_ip_input;
+    std::cout << "Introduzca una ip minima con el siguiente formato _._._._:_ " << std::endl;
+    std::cin >> min_ip_input;
+    std::cout << "Introduzca una ip minima con el siguiente formato _._._._:_ " << std::endl;
+    std::cin >> max_ip_input; 
+    
+    auto min_ip = StringManipulation::parse_ip(min_ip_input);
+    auto max_ip  = StringManipulation::parse_ip(max_ip_input);
+    ip_bounds_ = std::make_pair(min_ip, max_ip);
 }
 int Interface::generate_date()
 {
@@ -112,6 +126,31 @@ std::vector<Element> Interface::filter_vector(std::vector<Element> curr_vector)
     Continue();
     return filtered_vector;
 }
+std::vector<Element> Interface::filter_vector_by_ips(std::vector<Element> curr_vector)
+{
+    std::cout << "La medida del vector es : " << curr_vector.size() << std::endl;
+    std::cout << "Filtrado de los datos basado en la IP : " << std::endl;
+    Continue();
+    generate_ip_bounds();
+    std::cout << "First : " << ip_bounds_.first << ", Second : " << ip_bounds_.second <<std::endl;
+
+    auto lower_bound = ip_bounds_.first;
+    auto finder = Find(curr_vector, lower_bound);
+    auto lower_bound_index = finder.binary();
+
+    std::cout << "Lower Bound : " << lower_bound_index << std::endl;
+
+    auto upper_bound = ip_bounds_.second;
+    finder = Find(curr_vector, upper_bound);
+    auto upper_bound_index = finder.binary();
+
+    std::cout << "Upper Bound : " << upper_bound_index << std::endl;
+    auto filtered_vector = std::vector<Element>(curr_vector.begin() + lower_bound_index, curr_vector.begin() + upper_bound_index);
+    std::cout << "Size : " << filtered_vector.size() << std::endl;
+    dump_to_file(filtered_vector, "out/filtered.txt");
+    Continue();
+    return filtered_vector;
+}
 void Interface::dump_to_file(std::vector<Element> elements, std::string path)
 {
     std::cout << "Writing to file" << path << std::endl;
@@ -123,6 +162,7 @@ void Interface::dump_to_file(std::vector<Element> elements, std::string path)
     {
         auto date = element.date();
         auto time = date.time;
+        myfile << "Numeric IP : " << element.numeric_ip() << std::endl;
         myfile << "Month : " << date.month << ", Day : " << date.day << ", Time : "
             << time.hour << 'h' << time.minutes << 'm' << time.seconds << 's' << std::endl;
         myfile << "Content : " << element.content() << " Message : " << element.message() << std::endl;
@@ -147,7 +187,7 @@ void Interface::show_content(std::vector<Element> elements)
     {
         auto date = element.date();
         auto time = date.time;
-        std::cout << "Month : " << date.month << ", Day : " << date.day << ", Time : "
+        std::cout <<"Numeric IP : " << element.numeric_ip()<< "Month : " << date.month << ", Day : " << date.day << ", Time : "
             << time.hour << 'h' << time.minutes << 'm' << time.seconds << 's' << std::endl;
         std::cout << "Content : " << element.content() << " Message : " << element.message() << std::endl;
     }

@@ -28,6 +28,18 @@ std::string StringManipulation::join(std::vector<std::string> strs, char chr)
         result += (s + chr);
     return result;
 }
+int StringManipulation::parse_ip(std::string password)
+{
+    auto splitted_password = StringManipulation::split(password, ':');
+    auto ip = splitted_password[0];
+    auto splitted_ip = StringManipulation::split(ip, '.');
+    auto port = splitted_password[1];
+    splitted_ip.push_back(port);
+    int numeric_ip = 0;
+    for (auto value : splitted_ip)
+        numeric_ip += StringManipulation::toInt(value);
+    return numeric_ip;
+}
 int StringManipulation::toInt(std::string str)
 {
     return std::atoi(str.c_str());

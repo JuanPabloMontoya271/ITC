@@ -9,5 +9,6 @@ public:
     StringManipulation();
     static std::vector<std::string> split(std::string, char);
     static std::string join(std::vector<std::string>, char);
+    static int parse_ip(std::string);
     static int toInt(std::string);
 };

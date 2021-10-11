@@ -14,7 +14,7 @@ int Find::sequential()
     int i = 0;
     for (i; i < array_.size(); i++)
     {
-        if (array_[i].key() >= num_)
+        if (array_[i].numeric_ip() >= num_)
         {
             std::cout << "[Index] : " << i << "\n[Value] : " << num_ << std::endl << std::endl;
             return i;
@@ -37,12 +37,12 @@ int Find::binary()
     while (i <= j)
     {
         mid = (i + j) / 2;
-        if (array_[mid].key() == num_)
+        if (array_[mid].numeric_ip() == num_)
         {
             // std::cout << "[Index]: " << mid << "\n[Value] : " << num_ << std::endl << std::endl;
             return mid;
         }
-        else if (array_[mid].key() > num_)
+        else if (array_[mid].numeric_ip() > num_)
             j = mid - 1;
         else
             i = mid + 1;

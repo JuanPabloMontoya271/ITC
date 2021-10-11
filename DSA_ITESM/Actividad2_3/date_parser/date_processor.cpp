@@ -33,9 +33,11 @@ Element DateProcessor::content()
     auto d = date(map_[month], day, t);
 
     auto password = values[3];
-
     auto message = StringManipulation::join(std::vector<std::string>(values.begin() + 4, values.end()), ' ');
-    Element element{ d, password, message };
+    
+    int numeric_ip = StringManipulation::parse_ip(password);
+    std::cout << "Content : " << numeric_ip<< std::endl;
+    Element element{ d, password, message, numeric_ip };
     return element;
 
 }

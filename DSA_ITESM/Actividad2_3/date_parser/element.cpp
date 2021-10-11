@@ -14,13 +14,14 @@ Element::Element()
     message_ = "";
     key_ = generate_key();
 }
-Element::Element(Date date, std::string content, std::string message)
+Element::Element(Date date, std::string content, std::string message, int numeric_ip)
 {
 
     date_ = date;
     content_ = content;
     message_ = message;
     key_ = generate_key();
+    numeric_ip_ = numeric_ip;
 }
 Date Element::date()
 {
@@ -29,6 +30,10 @@ Date Element::date()
 int Element::key()
 {
     return key_;
+}
+int Element::numeric_ip()
+{
+    return numeric_ip_;
 }
 void Element::set_key(int key)
 {

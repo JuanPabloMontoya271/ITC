@@ -12,16 +12,16 @@ void DateParser::read()
         {
             auto date = DateProcessor(line);
             auto element = date.content();
-
+            auto key = element.numeric_ip();
             element_keys_.push_back(element);
             if (frequency_map_.find(element.key()) == frequency_map_.end())
             {
-                frequency_map_[element.key()] = 0;
-                frequency_table_[element.key()] = element;
+                frequency_map_[key] = 0;
+                frequency_table_[key] = element;
             }
 
             else
-                frequency_map_[element.key()] += 1;
+                frequency_map_[key] += 1;
         }
         for (auto el : frequency_map_)
         {

@@ -1,5 +1,5 @@
 #include "Sort.hpp"
-
+#include "../date_parser/element.hpp"
 Sort::Sort(std::vector<Element> array)
 {
 	array_ = array;
@@ -13,7 +13,7 @@ void Sort::intercambio()
 	int n = array_.size();
 	for (i = 0; i <= n - 2; i++)
 		for (j = i + 1; j <= n - 1; j++)
-			if (array_[i].key() > array_[j].key())
+			if (array_[i].numeric_ip() > array_[j].numeric_ip())
 			{
 				auto aux = array_[i];
 				array_[i] = array_[j];
@@ -31,7 +31,7 @@ void Sort::burbuja()
 		interruptor = false; // no se han hecho intercambios
 		for (int j = 0; j < n - 1 - pasada; j++)
 		{
-			if (array_[j + 1].key() < array_[j].key())
+			if (array_[j + 1].numeric_ip() < array_[j].numeric_ip())
 			{
 				auto tmp = array_[j];
 				array_[j] = array_[j + 1];
@@ -79,7 +79,7 @@ void Sort::merge(int const left, int const mid, int const right)
 
 	// Merge the temp arrays back into array[left..right]
 	while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
-		if (leftArray[indexOfSubArrayOne].key() <= rightArray[indexOfSubArrayTwo].key()) {
+		if (leftArray[indexOfSubArrayOne].numeric_ip() <= rightArray[indexOfSubArrayTwo].numeric_ip()) {
 			array_[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
 			indexOfSubArrayOne++;
 		}
@@ -113,5 +113,5 @@ void Sort::reset()
 void Sort::show()
 {
 	for (auto value : array_)
-		std::cout << value.key() << std::endl << std::endl;
+		std::cout << value.numeric_ip() << std::endl << std::endl;
 }
