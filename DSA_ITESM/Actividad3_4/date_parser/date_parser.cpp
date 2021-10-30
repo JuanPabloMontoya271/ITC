@@ -33,8 +33,6 @@ void DateParser::read()
             bst_.Insert(root_, it->second, it->first);
             it++;
         }
-        std::cout << "inorder" <<std::endl;
-        bst_.Inorder(root_);
         
         myfile.close();
     }

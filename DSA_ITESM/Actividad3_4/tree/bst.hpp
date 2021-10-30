@@ -18,7 +18,7 @@ class BST
 	    BST* Insert(BST*, int, std::string);
 
         void First5(BST* root, std::vector <BST*>& array);
-	    void Inorder(BST*);
+	    void Inorder(BST*, std::vector<std::pair<int, std::string>>&);
         void preorder(BST*);
         void postorder(BST*);
         void levelorder(BST*);

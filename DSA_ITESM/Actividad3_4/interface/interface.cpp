@@ -13,8 +13,16 @@ Interface::Interface(BST bst, BST* root)
 }
 void Interface::Run()
 {
-    std::vector<BST*> resultado;
-    bst_.Inorder(root_);
+    std::vector<std::pair<int, std::string>> resultado;
+    std::cout << "Inorder" << std::endl;
+    bst_.Inorder(root_, resultado);
+    int last = resultado.size();
+    std::cout << resultado.size() << std::endl;
+    std::cout << "Top 5 " << std::endl;
+    for (int n = last-1;n>=last-5; n--)
+    {
+        std::cout  << "Resultado : " << n << std::endl<< "IP: " << resultado[n].second <<std::endl<<"Frecuencia : " << resultado[n].first<< std::endl;
+    }
 
 }
 

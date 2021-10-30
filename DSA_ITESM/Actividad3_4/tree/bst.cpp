@@ -40,14 +40,16 @@ BST* BST::Insert(BST* root, int value, std::string ip_)
 	return root;
 }
 
-void BST::Inorder(BST* root)
+void BST::Inorder(BST* root, std::vector<std::pair<int, std::string>>& resultado)
 {
 	if (!root) {
 		return;
 	}
-	Inorder(root->left);
+	Inorder(root->left, resultado);
 	cout << "Data : " << root->data << " IP : " << root->ip << endl;
-	Inorder(root->right);
+    auto pair = std::make_pair(root->data, root->ip);
+    resultado.push_back(pair);
+	Inorder(root->right, resultado);
 }
 void BST::First5(BST* root, std::vector <BST*>& array)
 {
