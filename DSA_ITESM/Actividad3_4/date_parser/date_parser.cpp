@@ -5,6 +5,8 @@ void DateParser::read()
 {
     std::string line;
     std::ifstream myfile("bitacora.txt");
+    root_ = NULL;
+    
     if (myfile.is_open())
     {
         std::cout << "Reading" << std::endl;
@@ -12,28 +14,34 @@ void DateParser::read()
         {
             auto date = DateProcessor(line);
             auto element = date.content();
-            auto key = element.numeric_ip();
+            auto key = element.ip();
             element_keys_.push_back(element);
-            if (frequency_map_.find(element.key()) == frequency_map_.end())
+            if (frequency_map_.find(element.ip()) == frequency_map_.end())
             {
-                frequency_map_[key] = 0;
+                frequency_map_[key] = 1;
                 frequency_table_[key] = element;
             }
 
             else
                 frequency_map_[key] += 1;
         }
-        for (auto el : frequency_map_)
+        std::unordered_map<std::string, int>::iterator it = frequency_map_.begin();
+        root_ = bst_.Insert(root_, it->second, it->first);
+        it++;
+        while (it != frequency_map_.end())
         {
-            frequencies_.push_back(el);
+            bst_.Insert(root_, it->second, it->first);
+            it++;
         }
-        std::cout << frequencies_.size() << std::endl;
+        std::cout << "inorder" <<std::endl;
+        bst_.Inorder(root_);
+        
         myfile.close();
     }
 
     else std::cout << "Unable to open file";
 }
-std::unordered_map <int, Element> DateParser::frequency_table()
+std::unordered_map <std::string, Element> DateParser::frequency_table()
 {
     return frequency_table_;
 }
@@ -41,11 +49,19 @@ std::vector<Element> DateParser::elements()
 {
     return element_keys_;
 }
-std::unordered_map<int, int> DateParser::frequency_map()
+std::unordered_map<std::string, int> DateParser::frequency_map()
 {
     return frequency_map_;
 }
-std::vector<std::pair<int, int>> DateParser::frequencies()
+std::vector<std::pair<std::string, int>> DateParser::frequencies()
 {
     return frequencies_;
+}
+BST DateParser::bst()
+{
+    return bst_;
+}
+BST* DateParser::root()
+{
+    return root_;
 }

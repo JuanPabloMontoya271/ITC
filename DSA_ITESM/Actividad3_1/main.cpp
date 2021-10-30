@@ -5,12 +5,12 @@
 using namespace std;
 
 
-void test(BST b, BST* root, std::vector<int> array)
+void test(BST b, BST* root, std::vector<int> array, std::vector<std::string> ips)
 {
-    root = b.Insert(root, array[0]);
+    root = b.Insert(root, array[0], ips[0]);
     for (int i = 1; i < array.size(); i++)
     {
-        b.Insert(root, array[i]);
+        b.Insert(root, array[i], ips[i]);
        
     }
     
@@ -40,7 +40,8 @@ int main()
 
 	BST b, *root = NULL;
     std::vector<int> array={10,20,30,42,394,20};
-    test(b, root, array);
+    std::vector<std::string> ips = {"123", "1234", "12345", "123456", "1234567", "12345678"};
+    test(b, root, array, ips);
 	// root = b.Insert(root, 50);
 	// b.Insert(root, 30);
 	// b.Insert(root, 20);

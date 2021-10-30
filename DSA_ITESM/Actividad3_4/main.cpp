@@ -6,20 +6,22 @@
 #include "interface/interface.cpp"
 #include <vector>
 #include <unordered_set>
+#include "tree/bst.cpp"
 int generate_date();
 std::vector<Element> filter_vector(std::vector<Element> curr_vector);
 void show_vector(std::vector<Element> elements);
 int main()
 {
+    
+    
     DateParser parser;
     parser.read();
 
-    auto elements = parser.elements();
-    auto frequencies = parser.frequencies();
-    auto frequency_table = parser.frequency_table();
+    
+    auto bst= parser.bst();
+    auto root = parser.root();
 
-
-    auto interface = Interface(elements, frequencies, frequency_table);
+    auto interface = Interface(bst, root);
     interface.Run();
     // auto sorter = Sort(elements);
     // auto sorted = sorter.mergeSort();

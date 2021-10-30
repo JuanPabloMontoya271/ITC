@@ -34,10 +34,11 @@ Element DateProcessor::content()
 
     auto password = values[3];
     auto message = StringManipulation::join(std::vector<std::string>(values.begin() + 4, values.end()), ' ');
-    
+    auto ip_ = StringManipulation::split(password,':')[0];
+
     int numeric_ip = StringManipulation::parse_ip(password);
-    std::cout << "Content : " << numeric_ip<< std::endl;
-    Element element{ d, password, message, numeric_ip };
+    std::cout << "Content : " << ip_<< std::endl;
+    Element element{ d, password, message, numeric_ip, ip_};
     return element;
 
 }

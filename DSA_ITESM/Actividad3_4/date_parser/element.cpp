@@ -13,8 +13,9 @@ Element::Element()
     content_ = "";
     message_ = "";
     key_ = generate_key();
+    ip_ = "";
 }
-Element::Element(Date date, std::string content, std::string message, int numeric_ip)
+Element::Element(Date date, std::string content, std::string message, int numeric_ip, std::string ip)
 {
 
     date_ = date;
@@ -22,6 +23,7 @@ Element::Element(Date date, std::string content, std::string message, int numeri
     message_ = message;
     key_ = generate_key();
     numeric_ip_ = numeric_ip;
+    ip_ = ip;
 }
 Date Element::date()
 {
@@ -43,7 +45,10 @@ std::string Element::content()
 {
     return content_;
 }
-
+std::string Element::ip()
+{
+    return ip_;
+}
 std::string Element::message()
 {
     return message_;

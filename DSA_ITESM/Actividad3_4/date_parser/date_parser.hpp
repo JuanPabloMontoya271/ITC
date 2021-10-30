@@ -6,6 +6,7 @@
 #include <vector>
 #include <unordered_map>
 #include "element.hpp"
+#include "../tree/bst.hpp"
 class DateParser
 {
 public:
@@ -17,13 +18,17 @@ public:
     void read();
 
     std::vector<Element> elements();
-    std::vector<std::pair<int, int>> frequencies();
-    std::unordered_map<int, int> frequency_map();
-    std::unordered_map <int, Element> frequency_table();
+    std::vector<std::pair<std::string, int>> frequencies();
+    std::unordered_map<std::string, int> frequency_map();
+    std::unordered_map <std::string, Element> frequency_table();
+    BST bst();
+    BST* root();
 
 private:
     std::vector<Element> element_keys_;
-    std::vector<std::pair<int, int>> frequencies_;
-    std::unordered_map <int, int> frequency_map_;
-    std::unordered_map <int, Element> frequency_table_;
+    std::vector<std::pair<std::string, int>> frequencies_;
+    std::unordered_map <std::string, int> frequency_map_;
+    std::unordered_map <std::string, Element> frequency_table_{};
+    BST bst_;
+    BST* root_;
 };

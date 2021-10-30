@@ -2,36 +2,38 @@
 using namespace std;
 BST::BST()
 	: data(0)
+    , ip("")
 	, left(NULL)
 	, right(NULL)
 {
 }
 
-BST::BST(int value)
+BST::BST(int value, std::string ip_)
 {
 	data = value;
+    ip = ip_;
 	left = right = NULL;
 }
 
 
-BST* BST::Insert(BST* root, int value)
+BST* BST::Insert(BST* root, int value, std::string ip_)
 {
 	if (!root)
 	{
 		
-		return new BST(value);
+		return new BST(value, ip_);
 	}
 
 
 	if (value > root->data)
 	{
 		
-		root->right = Insert(root->right, value);
+		root->right = Insert(root->right, value, ip_);
 	}
 	else
 	{
 		
-		root->left = Insert(root->left, value);
+		root->left = Insert(root->left, value, ip_);
 	}
 
 	
@@ -44,7 +46,7 @@ void BST::Inorder(BST* root)
 		return;
 	}
 	Inorder(root->left);
-	cout << root->data << endl;
+	cout << "Data : " << root->data << " IP : " << root->ip << endl;
 	Inorder(root->right);
 }
 void BST::preorder(BST* root)
@@ -52,7 +54,7 @@ void BST::preorder(BST* root)
 	if (!root) {
 		return;
 	}
-    cout << root->data << endl;
+    cout << "Data : " << root->data << " IP : " << root->ip << endl;
 	preorder(root->left);
 	
 	preorder(root->right);
@@ -66,7 +68,7 @@ void BST::postorder(BST* root)
 	postorder(root->left);
 	
 	postorder(root->right);
-    cout << root->data << endl;
+    cout << "Data : " << root->data << " IP : " << root->ip << endl;
 }
 void BST::levelorder(BST* root)
 {
@@ -83,7 +85,7 @@ void BST::levelorder(BST* root)
     while (q.empty() == false) {
         
         BST* node = q.front();
-        cout << node->data << " ";
+        cout << "Data : " << node->data << " IP : " << node->ip << endl;
         q.pop();
  
         
@@ -124,7 +126,7 @@ bool BST::ancestors(BST* root, int target)
   if ( ancestors(root->left, target) ||
        ancestors(root->right, target) )
   {
-    cout << root->data << " ";
+    cout << "Data : " << root->data << " IP : " << root->ip << endl;
     return true;
   }
  

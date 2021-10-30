@@ -4,6 +4,7 @@
 class BST
 {
     int data;
+    std::string ip;
 	BST *left, *right;
     public:
         BST();
@@ -11,10 +12,10 @@ class BST
         
 
 	
-	    BST(int);
+	    BST(int, std::string);
 
 
-	    BST* Insert(BST*, int);
+	    BST* Insert(BST*, int, std::string);
 
 	
 	    void Inorder(BST*);

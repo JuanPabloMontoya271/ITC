@@ -1,31 +1,33 @@
 #include "interface.hpp"
 #include "../date_parser/string_manipulation.hpp"
-Interface::Interface(std::vector<Element> elements, std::vector<std::pair<int, int>>frequencies, std::unordered_map<int, Element> frequency_table)
+Interface::Interface(std::vector<Element> elements, std::vector<std::pair<std::string, int>>frequencies, std::unordered_map<std::string, Element> frequency_table)
 {
     elements_ = elements;
     frequencies_ = frequencies;
     frequency_table_ = frequency_table;
 }
+Interface::Interface(BST bst, BST* root)
+{
+    bst_ = bst;
+    root_ = root;
+}
 void Interface::Run()
 {
-    SortElements();
-    SortByFrequencies();
-    auto filtered_vector = filter_vector_by_ips(sorted_elements_);
-    show_content(filtered_vector);
-    show_content();
+    std::vector<BST*> resultado;
+    bst_.Inorder(root_);
 
 }
 
 void Interface::SortElements()
 {
-    std::cout << "Ordenamiento de los Datos Basado en la IP : " << std::endl;
-    Continue();
-    auto sorter = Sort(elements_);
-    auto sorted = sorter.mergeSort();
-    sorted_elements_ = sorted;
-    sorter.show();
-    dump_to_file(sorted_elements_, "out/sorted.txt");
-    Continue();
+    // std::cout << "Ordenamiento de los Datos Basado en la IP : " << std::endl;
+    // Continue();
+    // auto sorter = Sort(elements_);
+    // auto sorted = sorter.mergeSort();
+    // sorted_elements_ = sorted;
+    // sorter.show();
+    // dump_to_file(sorted_elements_, "out/sorted.txt");
+    // Continue();
 
 }
 void Interface::show_content()
@@ -43,14 +45,14 @@ void Interface::show_content()
 }
 void Interface::SortByFrequencies()
 {
-    std::cout << "Ordenamiento de los Datos Basado en la frecuencia de aparicion : " << std::endl;
-    Continue();
-    auto sort_freq = SortFreq(frequencies_);
-    auto sorted_freq = sort_freq.mergeSort();
-    sorted_frequencies_ = sorted_freq;
-    sort_freq.show();
-    dump_to_file(sorted_freq, "out/sorted_freq.txt");
-    Continue();
+    // std::cout << "Ordenamiento de los Datos Basado en la frecuencia de aparicion : " << std::endl;
+    // Continue();
+    // auto sort_freq = SortFreq(frequencies_);
+    // auto sorted_freq = sort_freq.mergeSort();
+    // sorted_frequencies_ = sorted_freq;
+    // sort_freq.show();
+    // dump_to_file(sorted_freq, "out/sorted_freq.txt");
+    // Continue();
 }
 void Interface::Continue()
 {
@@ -102,54 +104,54 @@ int Interface::generate_date()
 }
 std::vector<Element> Interface::filter_vector(std::vector<Element> curr_vector)
 {
-    std::cout << "La medida del vector es : " << curr_vector.size() << std::endl;
-    std::cout << "Filtrado de los datos basado en la fecha : " << std::endl;
-    Continue();
-    std::cout << "Define una fecha minima : " << std::endl;
+    // std::cout << "La medida del vector es : " << curr_vector.size() << std::endl;
+    // std::cout << "Filtrado de los datos basado en la fecha : " << std::endl;
+    // Continue();
+    // std::cout << "Define una fecha minima : " << std::endl;
 
-    auto lower_bound = generate_date();
-    auto finder = Find(curr_vector, lower_bound);
-    auto lower_bound_index = finder.binary();
+    // auto lower_bound = generate_date();
+    // auto finder = Find(curr_vector, lower_bound);
+    // auto lower_bound_index = finder.binary();
 
-    std::cout << "Lower Bound : " << lower_bound_index << std::endl;
+    // std::cout << "Lower Bound : " << lower_bound_index << std::endl;
 
-    std::cout << "Define una fecha maxima : " << std::endl;
+    // std::cout << "Define una fecha maxima : " << std::endl;
 
-    auto upper_bound = generate_date();
-    finder = Find(curr_vector, upper_bound);
-    auto upper_bound_index = finder.binary();
+    // auto upper_bound = generate_date();
+    // finder = Find(curr_vector, upper_bound);
+    // auto upper_bound_index = finder.binary();
 
-    std::cout << "Upper Bound : " << upper_bound_index << std::endl;
-    auto filtered_vector = std::vector<Element>(curr_vector.begin() + lower_bound_index, curr_vector.begin() + upper_bound_index);
-    std::cout << "Size : " << filtered_vector.size() << std::endl;
-    dump_to_file(filtered_vector, "out/filtered.txt");
-    Continue();
-    return filtered_vector;
+    // std::cout << "Upper Bound : " << upper_bound_index << std::endl;
+    // auto filtered_vector = std::vector<Element>(curr_vector.begin() + lower_bound_index, curr_vector.begin() + upper_bound_index);
+    // std::cout << "Size : " << filtered_vector.size() << std::endl;
+    // dump_to_file(filtered_vector, "out/filtered.txt");
+    // Continue();
+    // return filtered_vector;
 }
 std::vector<Element> Interface::filter_vector_by_ips(std::vector<Element> curr_vector)
 {
-    std::cout << "La medida del vector es : " << curr_vector.size() << std::endl;
-    std::cout << "Filtrado de los datos basado en la IP : " << std::endl;
-    Continue();
-    generate_ip_bounds();
-    std::cout << "First : " << ip_bounds_.first << ", Second : " << ip_bounds_.second <<std::endl;
+    // std::cout << "La medida del vector es : " << curr_vector.size() << std::endl;
+    // std::cout << "Filtrado de los datos basado en la IP : " << std::endl;
+    // Continue();
+    // generate_ip_bounds();
+    // std::cout << "First : " << ip_bounds_.first << ", Second : " << ip_bounds_.second <<std::endl;
 
-    auto lower_bound = ip_bounds_.first;
-    auto finder = Find(curr_vector, lower_bound);
-    auto lower_bound_index = finder.binary();
+    // auto lower_bound = ip_bounds_.first;
+    // auto finder = Find(curr_vector, lower_bound);
+    // auto lower_bound_index = finder.binary();
 
-    std::cout << "Lower Bound : " << lower_bound_index << std::endl;
+    // std::cout << "Lower Bound : " << lower_bound_index << std::endl;
 
-    auto upper_bound = ip_bounds_.second;
-    finder = Find(curr_vector, upper_bound);
-    auto upper_bound_index = finder.binary();
+    // auto upper_bound = ip_bounds_.second;
+    // finder = Find(curr_vector, upper_bound);
+    // auto upper_bound_index = finder.binary();
 
-    std::cout << "Upper Bound : " << upper_bound_index << std::endl;
-    auto filtered_vector = std::vector<Element>(curr_vector.begin() + lower_bound_index, curr_vector.begin() + upper_bound_index);
-    std::cout << "Size : " << filtered_vector.size() << std::endl;
-    dump_to_file(filtered_vector, "out/filtered.txt");
-    Continue();
-    return filtered_vector;
+    // std::cout << "Upper Bound : " << upper_bound_index << std::endl;
+    // auto filtered_vector = std::vector<Element>(curr_vector.begin() + lower_bound_index, curr_vector.begin() + upper_bound_index);
+    // std::cout << "Size : " << filtered_vector.size() << std::endl;
+    // dump_to_file(filtered_vector, "out/filtered.txt");
+    // Continue();
+    // return filtered_vector;
 }
 void Interface::dump_to_file(std::vector<Element> elements, std::string path)
 {
@@ -169,7 +171,7 @@ void Interface::dump_to_file(std::vector<Element> elements, std::string path)
     }
     myfile.close();
 }
-void Interface::dump_to_file(std::vector<std::pair<int, int>> element, std::string path)
+void Interface::dump_to_file(std::vector<std::pair<std::string, int>> element, std::string path)
 {
     std::cout << "Writing to file" << path << std::endl;
     std::ofstream myfile;
