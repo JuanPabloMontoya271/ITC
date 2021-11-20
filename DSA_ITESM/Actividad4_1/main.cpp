@@ -31,7 +31,7 @@ void loadGraph()
             
             auto V = toInt(line[0]);
             cout << V << endl;
-            auto g = Graph(V);
+            auto g = new Graph(V);
             getline(myfile, line);
             
            
@@ -42,12 +42,12 @@ void loadGraph()
             {
                 getline(myfile, line);
                 cout << line[0] << line[2] << endl;
-                g.addEdge(toInt(line[0]), toInt(line[2]) );
+                g->addEdge(toInt(line[0]), toInt(line[2]) );
                 
 
             }
             cout<<i<<endl;
-            if (g.isCyclic())
+            if (g->isCyclic())
 
                     cout << "Graph contains cycle" << endl;
 
