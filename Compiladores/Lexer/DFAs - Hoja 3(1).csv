@@ -1,0 +1,15 @@
+,0 (isKnown),1 (number),2 (point),3 (E),4 (sign),5 (string),6 (slash),7 (space),8 (alpha),9 (variable_accepted),10 else
+q0,q1,q2,q1,q12,q1,q8,q10,q0,q12,q12,D
+q1,D,q2,D,D,D,D,q10,q0,D,D,D
+q2,D,q2,q3,q5,D,D,q10,q0,D,D,D
+q3,D,q4,D,q5,D,D,q10,q0,D,D,D
+q4,D,q4,D,q5,D,D,D,q0,D,D,D
+q5,D,q7,D,D,q6,D,D,q0,D,D,D
+q6,D,q7,D,D,D,D,D,q0,D,D,D
+q7,D,q7,D,D,D,D,D,q0,D,D,D
+q8,q8,q8,q8,q8,q8,q9,q8,q8,q8,q8,D
+q9,D,D,D,D,D,D,D,q0,D,D,D
+q10,D,D,D,D,D,D,q11,q0,D,D,D
+q11,q11,q11,q11,q11,q11,q11,q11,q11,q11,q11,D
+q12,D,q12,D,q12,D,D,D,q0,q12,q12,D
+D,D,D,D,D,D,D,D,q0,D,D,D

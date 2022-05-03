@@ -1,0 +1,45 @@
+,Class, color
+(,parenthesis,0
+),parenthesis,0
+{,parenthesis
+},parenthesis
+==,operador_booleano
+>=,operador_booleano
+<=,operador_booleano
+>,operador_booleano
+<,operador_booleano
+!=,operador_booleano
++,operador_aritmetico
+^,operador_aritmetico
+*,operador_aritmetico
+/,operador_aritmetico
+÷,operador_aritmetico
+int,tipo
+float,tipo
+char,tipo
+double,tipo
+const,constante
+[,array
+],array
+function,funcion
+func,funcion
+def,funcion
+=>,lambda
+lambda,lambda
+return ,return
+if,condicional
+else,condicional
+elif,condicional
+else if,condicional
+elseif,condicional
+try,errores
+catch,errores
+finally,errores
+;,fin
+for,loop
+while,loop
+foreach,loop
+forEach,loop
+do,loop
+class,class
+Class,class
