@@ -1,35 +1,4 @@
-import json
-
-class Generator:
-    def __init__(self) -> None :
-        self.result = []
-        with open("rules.json") as file:
-            self.rules = json.load(file)
-        
-        self.rules = json.loads(self.rules)
-        return 
-    
-    def __call__(self, stream: list[dict]) -> list[str]:
-        for element in stream:
-            for key, value in (element.items()):
-                if key in self.rules:
-                    self.result.append(self.span(key, self.rules[key]["Color"]))
-                else:
-                    self.result.append(self.span(key, "normal"))
-        response = [self.html_wrapper("".join(self.result)), self.generate_css()]
-        return response
-    
-    def span(self, text: str, color: int):
-        return f"<span class='family-{color}' > {text} </span>"
-    
-    def html_wrapper(self, content):
-        html = """<html> <head>
-                            <link rel="stylesheet" href="styles.css">
-                            </head> <body>""" 
-        footer = """</body></html>"""
-        return html + content + footer 
-    def generate_css(self):
-        css = """.family-0{
+.family-0{
                     color: rgb(28, 140, 238);
                 }
                 .family-1{
@@ -73,5 +42,4 @@ class Generator:
                 }
                 .family-normal{
                     color: rgb(92, 179, 255);
-                }"""
-        return css
+                }

@@ -1,4 +1,9 @@
 import json
+import os
+import glob 
+import threading
+from time import time
+from tracemalloc import start
 from Generator import Generator
 
 class Lexer:
@@ -101,13 +106,32 @@ class Lexer:
         type_ = type_ if curr !="q1" else type_[curr_lex[0]]
         self.result.append({"".join(curr_lex): type_ })
         return 
-        
-if __name__ == "__main__":
-    lexer = Lexer("input.txt")
+def main(file):
+    lexer = Lexer(file)
     lexer.run()
     generator = Generator()
     html, css = generator(lexer.result)
-    with open("index.html", "w") as file:
+    result_name = os.path.join(file.split(".")[0]+".html")
+    css_name = os.path.join("inputs", "styles.css")
+    with open(result_name, "w") as file:
         file.write(html)
-    with open("styles.css", "w") as file:
+    with open(css_name, "w") as file:
         file.write(css)
+if __name__ == "__main__":
+    files = (glob.glob("inputs/*"))
+    start_time = time()
+    for file in files:
+        main(file)
+    first_time = time()-start_time
+
+    start_time = time()
+    threads = []
+    for file in files:
+        x = threading.Thread(target = main, args = (file,))
+        x.start()
+        threads.append(x)
+    for thread in threads:
+        thread.join()
+    
+    second_time = time() - start_time
+    print(f"Boost up : {first_time/second_time}, first : {first_time}, second: {second_time}")
